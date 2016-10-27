@@ -27,7 +27,7 @@ public class PsychGUI extends JFrame{
         JTextField username = new JTextField("Username");
         startPanel2.add(butt);
 
-
+        System.out.println("Hello");
 
         mainPanel.add(butt, BorderLayout.NORTH);
         mainPanel.add(startPanel1, BorderLayout.CENTER);
