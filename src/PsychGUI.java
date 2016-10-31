@@ -6,10 +6,29 @@ import java.awt.*;
  */
 public class PsychGUI extends JFrame{
 
-    private JFrame frame;
+    private static JFrame currentFrame;
+    private Psych psych;
 
-    PsychGUI(){
-        frame = this;
+    PsychGUI(Psych psych){
+
+        /**
+         * GUIs NEEEDED:
+         *      1. Login Screen:
+         *          - two text boxes that ask for username & password
+         *          - two buttons "login" and "register" with respective action commands
+         *      2. Join/Create game screen:
+         *          - Two buttons that ask whether player wants to join or create game
+         *      3. Create Game:
+         *          - Text box that lists participants
+         *          - A textbox that can have a code to join
+         *      4. Join Game:
+         *          - 1 text box to input a code
+         *          - 1 button to try and join game
+         *      5. Game Frames (HAVE NOT DECIDED ON IMPLEMENTION)
+         */
+
+        this.psych = psych;
+        currentFrame = this;
         this.setSize(400,600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -34,6 +53,10 @@ public class PsychGUI extends JFrame{
 
 
         this.setVisible(true);
+    }
+
+    public static JFrame getCurrentFrame(){
+        return currentFrame;
     }
 
 
