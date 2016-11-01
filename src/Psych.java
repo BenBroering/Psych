@@ -9,31 +9,41 @@ import java.net.Socket;
  */
 public class Psych {
 
-    PsychGUI gui;
-    private String serverIP = "localhost";
-    private int serverPort = 9999;
+    private static Psych game;
+    private static PsychGUI gui;
+    private static String serverIP = "localhost";
+    private static int serverPort = 9999; // Default Port
+    private static PrintWriter out;
+    private static InputStreamReader isr;
+    private static BufferedReader in;
 
     Psych(){
-        gui = new PsychGUI(this);
+        game = this;
+        gui = new PsychGUI(this, GameState.LOGINREGISTER);
         try{
             Socket socket = new Socket(serverIP, serverPort);
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            InputStreamReader isr = new InputStreamReader(socket.getInputStream());
-            BufferedReader in = new BufferedReader(isr);
-
-            //out.println(FoilMakerNetworkProtocol.MSG_TYPE.CREATENEWUSER + "--Ben--ben123");
-            //String serverMessage = in.readLine();
-
-
-
-
-
+            this.out = new PrintWriter(socket.getOutputStream(), true);
+            this.isr = new InputStreamReader(socket.getInputStream());
+            this.in = new BufferedReader(isr);
         }catch(IOException e){
             e.printStackTrace();
         }
+    }
 
+    public static Psych getGame(){
+        return game;
+    }
 
+    public PrintWriter getOut() {
+        return out;
+    }
 
+    public InputStreamReader getIsr() {
+        return isr;
+    }
+
+    public BufferedReader getIn() {
+        return in;
     }
 
     public static void main(String args[]){
