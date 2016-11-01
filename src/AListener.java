@@ -9,7 +9,6 @@ import java.io.IOException;
  */
 public class AListener implements ActionListener {
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         // All this garbage is going to handle button presses.
 
