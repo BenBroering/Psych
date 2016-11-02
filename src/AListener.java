@@ -43,6 +43,8 @@ public class AListener implements ActionListener {
         }
 
         if(e.getActionCommand().equalsIgnoreCase("login")){
+            System.out.println("Hey");
+            //Psych.createNewGUI(GameState.ENDGAME);
 
         }
 

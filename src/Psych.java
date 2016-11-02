@@ -16,10 +16,10 @@ public class Psych {
     private static PrintWriter out;
     private static InputStreamReader isr;
     private static BufferedReader in;
+    private static int gameState = GameState.LOGINREGISTER;
 
     Psych(){
         game = this;
-        gui = new PsychGUI(this, GameState.LOGINREGISTER);
         try{
             Socket socket = new Socket(serverIP, serverPort);
             this.out = new PrintWriter(socket.getOutputStream(), true);
@@ -28,22 +28,39 @@ public class Psych {
         }catch(IOException e){
             e.printStackTrace();
         }
+
+        gui = new PsychGUI(this, gameState);
+
     }
 
     public static Psych getGame(){
         return game;
     }
 
-    public PrintWriter getOut() {
+    public static PrintWriter getOut() {
         return out;
     }
 
-    public InputStreamReader getIsr() {
+    public static InputStreamReader getIsr() {
         return isr;
     }
 
-    public BufferedReader getIn() {
+    public static BufferedReader getIn() {
         return in;
+    }
+
+    public static int getGameState() {
+        return gameState;
+    }
+
+    public static void setGameState(int gameState) {
+        Psych.gameState = gameState;
+    }
+
+    public static void createNewGUI(int gameState){
+        Psych.setGameState(gameState);
+        PsychGUI.getGUI().dispose();
+        new PsychGUI(getGame(), gameState);
     }
 
     public static void main(String args[]){

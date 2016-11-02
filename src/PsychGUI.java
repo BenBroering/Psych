@@ -39,12 +39,18 @@ public class PsychGUI extends JFrame{
          */
 
         //These things must always run!
+        super("Psych Game");
         this.psych = psych;
         this.gui = this;
         this.setSize(400,600);
         AListener aListener = new AListener();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //
+
+        if (gameState == GameState.ENDGAME){
+            System.out.println("The Game Has Ended.");
+            System.exit(0);
+        }
 
         if (gameState == GameState.LOGINREGISTER){
             /**
@@ -62,8 +68,11 @@ public class PsychGUI extends JFrame{
             JButton register = new JButton("register");
             JButton login = new JButton("login");
             register.setActionCommand("register");
+            login.setActionCommand("login");
             register.addActionListener(aListener);
+            login.addActionListener(aListener);
             stuffInFrame.add(register);
+            stuffInFrame.add(login);
             stuffInFrame.add(field1);
             stuffInFrame.add(field2);
 
