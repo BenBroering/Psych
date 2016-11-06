@@ -134,6 +134,7 @@ public class PsychGUI extends JFrame{
             //Need a method in either server or here to generate a random key.
             String gameKey = "ypw";
             JTextField field1 = new JTextField(gameKey,5);
+            
             stuffInFrame.add(label1);
             stuffInFrame.add(field1);
             
