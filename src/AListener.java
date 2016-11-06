@@ -59,6 +59,10 @@ public class AListener implements ActionListener {
         if(e.getActionCommand().equalsIgnoreCase("joinKey")){
 
         }
+        
+        if(e.getActionCommand().equalsIgnoreCase("startGame")){
+
+        }
 
     }
 

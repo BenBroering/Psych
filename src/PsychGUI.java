@@ -84,8 +84,6 @@ public class PsychGUI extends JFrame{
 
             mainPanel.add(startPanel1, BorderLayout.CENTER);
 
-
-
         }
 
         if(gameState == GameState.JOINCREATE){
@@ -115,13 +113,52 @@ public class PsychGUI extends JFrame{
             JTextField gameKey = new JTextField("",5);
             JButton joinKey = new JButton("Join a Game");
             joinKey.setActionCommand("joinKey");
+            joinKey.addActionListener(aListener);
+            stuffInFrame.add(label1);
+            stuffInFrame.add(gameKey);
             stuffInFrame.add(joinKey);
             
+            startPanel1.add(label1);
+            startPanel1.add(gameKey);
             startPanel1.add(joinKey);
             
             mainPanel.add(startPanel1, BorderLayout.CENTER);
             
+        }
+        
+        if(gameState == GameState.CREATE){
+        	JPanel mainPanel = (JPanel) this.getContentPane();
+            mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+            JPanel startPanel1 = new JPanel();
+            Label label1 = new Label("Others should use this key to join your game");
+            //Need a method in either server or here to generate a random key.
+            String gameKey = "ypw";
+            JTextField field1 = new JTextField(gameKey,5);
+            stuffInFrame.add(label1);
+            stuffInFrame.add(field1);
             
+            JPanel particPanel = new JPanel();
+            Label label2 = new Label("Participants");
+            JTextField field2 = new JTextField(10);
+            //Field needs to hear from server about other players joining.
+            field2.addActionListener(aListener);
+            stuffInFrame.add(label2);
+            stuffInFrame.add(field2);
+            particPanel.add(label2);
+            particPanel.add(field2);
+            
+            JButton startGame = new JButton("Start Game");
+            startGame.setActionCommand("startGame");
+            startGame.addActionListener(aListener);
+            stuffInFrame.add(startGame);
+            
+            startPanel1.add(label1);
+            startPanel1.add(field1);
+            startPanel1.add(particPanel);
+            startPanel1.add(startGame);
+            
+            mainPanel.add(startPanel1, BorderLayout.CENTER);
+         
         }
 
 
