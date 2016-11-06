@@ -63,7 +63,9 @@ public class PsychGUI extends JFrame{
             JPanel mainPanel = (JPanel) this.getContentPane();
             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
             JPanel startPanel1 = new JPanel();
+            JLabel label1 = new JLabel("Username");
             JTextField field1 = new JTextField("username",15);
+            JLabel label2 = new JLabel("Password");
             JTextField field2 = new JPasswordField("password",15);
             JButton register = new JButton("register");
             JButton login = new JButton("login");
@@ -71,16 +73,19 @@ public class PsychGUI extends JFrame{
             login.setActionCommand("login");
             register.addActionListener(aListener);
             login.addActionListener(aListener);
+            stuffInFrame.add(label1);
+            stuffInFrame.add(label2);
             stuffInFrame.add(register);
             stuffInFrame.add(login);
             stuffInFrame.add(field1);
             stuffInFrame.add(field2);
 
-
-            startPanel1.add(field1);
-            startPanel1.add(field2);
-            startPanel1.add(register);
-            startPanel1.add(login);
+            startPanel1.add(label1, BorderLayout.CENTER);
+            startPanel1.add(field1, BorderLayout.CENTER);
+            startPanel1.add(label2, BorderLayout.CENTER);
+            startPanel1.add(field2, BorderLayout.CENTER);
+            startPanel1.add(register, BorderLayout.SOUTH);
+            startPanel1.add(login, BorderLayout.SOUTH);
 
             mainPanel.add(startPanel1, BorderLayout.CENTER);
 
