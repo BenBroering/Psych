@@ -89,7 +89,22 @@ public class PsychGUI extends JFrame{
         }
 
         if(gameState == GameState.JOINCREATE){
-
+        	 JPanel mainPanel = (JPanel) this.getContentPane();
+             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+             JPanel startPanel1 = new JPanel();
+             JButton create = new JButton("Start New Game");
+             JButton join = new JButton("Join a Game");
+             create.setActionCommand("create");
+             join.setActionCommand("join");
+             create.addActionListener(aListener);
+             join.addActionListener(aListener);
+             stuffInFrame.add(create);
+             stuffInFrame.add(join);
+             
+             startPanel1.add(create);
+             startPanel1.add(join);
+             
+             mainPanel.add(startPanel1, BorderLayout.CENTER);
         }
 
 
