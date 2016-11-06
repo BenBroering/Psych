@@ -106,6 +106,23 @@ public class PsychGUI extends JFrame{
              
              mainPanel.add(startPanel1, BorderLayout.CENTER);
         }
+        
+        if(gameState == GameState.JOIN){
+        	JPanel mainPanel = (JPanel) this.getContentPane();
+            mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+            JPanel startPanel1 = new JPanel();
+            Label label1 = new Label("Enter the game key to join a game");
+            JTextField gameKey = new JTextField("",5);
+            JButton joinKey = new JButton("Join a Game");
+            joinKey.setActionCommand("joinKey");
+            stuffInFrame.add(joinKey);
+            
+            startPanel1.add(joinKey);
+            
+            mainPanel.add(startPanel1, BorderLayout.CENTER);
+            
+            
+        }
 
 
         // Always run this stuff too.

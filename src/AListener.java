@@ -55,6 +55,10 @@ public class AListener implements ActionListener {
         if(e.getActionCommand().equalsIgnoreCase("join")){
 
         }
+        
+        if(e.getActionCommand().equalsIgnoreCase("joinKey")){
+
+        }
 
     }
 
