@@ -126,6 +126,17 @@ public class PsychGUI extends JFrame{
             
         }
         
+        if(gameState == GameState.JOINWAIT){
+        	JPanel mainPanel = (JPanel) this.getContentPane();
+            mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+            JPanel startPanel1 = new JPanel();
+            Label label1  = new Label("Waiting for leader...");
+            
+            startPanel1.add(label1);
+            
+            mainPanel.add(startPanel1, BorderLayout.CENTER);
+        }
+        
         if(gameState == GameState.CREATE){
         	JPanel mainPanel = (JPanel) this.getContentPane();
             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
