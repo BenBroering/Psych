@@ -63,6 +63,9 @@ public class PsychGUI extends JFrame{
             JPanel mainPanel = (JPanel) this.getContentPane();
             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
             JPanel startPanel1 = new JPanel();
+            JPanel startPanel2 = new JPanel();
+            JPanel startPanel3 = new JPanel();
+            JPanel startPanel4 = new JPanel();
             JLabel label1 = new JLabel("Username");
             JTextField field1 = new JTextField("username",15);
             JLabel label2 = new JLabel("Password");
@@ -79,15 +82,18 @@ public class PsychGUI extends JFrame{
             stuffInFrame.add(login);
             stuffInFrame.add(field1);
             stuffInFrame.add(field2);
+            
+            startPanel2.add(label1, BorderLayout.WEST);
+            startPanel2.add(field1, BorderLayout.EAST);
+            startPanel3.add(label2, BorderLayout.WEST);
+            startPanel3.add(field2, BorderLayout.EAST);
+            startPanel4.add(register, BorderLayout.WEST);
+            startPanel4.add(login, BorderLayout.EAST);
 
-            startPanel1.add(label1, BorderLayout.CENTER);
-            startPanel1.add(field1, BorderLayout.CENTER);
-            startPanel1.add(label2, BorderLayout.CENTER);
-            startPanel1.add(field2, BorderLayout.CENTER);
-            startPanel1.add(register, BorderLayout.SOUTH);
-            startPanel1.add(login, BorderLayout.SOUTH);
-
-            mainPanel.add(startPanel1, BorderLayout.CENTER);
+            mainPanel.add(startPanel1, BorderLayout.NORTH);
+            mainPanel.add(startPanel2, BorderLayout.CENTER);
+            mainPanel.add(startPanel3, BorderLayout.CENTER);
+            mainPanel.add(startPanel4, BorderLayout.CENTER);
 
         }
 
@@ -114,7 +120,7 @@ public class PsychGUI extends JFrame{
         	JPanel mainPanel = (JPanel) this.getContentPane();
             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
             JPanel startPanel1 = new JPanel();
-            Label label1 = new Label("Enter the game key to join a game");
+            JLabel label1 = new JLabel("Enter the game key to join a game");
             JTextField gameKey = new JTextField("",5);
             JButton joinKey = new JButton("Join a Game");
             joinKey.setActionCommand("joinKey");
@@ -135,7 +141,7 @@ public class PsychGUI extends JFrame{
         	JPanel mainPanel = (JPanel) this.getContentPane();
             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
             JPanel startPanel1 = new JPanel();
-            Label label1  = new Label("Waiting for leader...");
+            JLabel label1  = new JLabel("Waiting for leader...");
             
             startPanel1.add(label1);
             
@@ -146,7 +152,7 @@ public class PsychGUI extends JFrame{
         	JPanel mainPanel = (JPanel) this.getContentPane();
             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
             JPanel startPanel1 = new JPanel();
-            Label label1 = new Label("Others should use this key to join your game");
+            JLabel label1 = new JLabel("Others should use this key to join your game");
             //Need a method in either server or here to generate a random key.
             String gameKey = "ypw";
             JTextField field1 = new JTextField(gameKey,5);
@@ -155,7 +161,7 @@ public class PsychGUI extends JFrame{
             stuffInFrame.add(field1);
             
             JPanel particPanel = new JPanel();
-            Label label2 = new Label("Participants");
+            JLabel label2 = new JLabel("Participants");
             JTextField field2 = new JTextField(10);
             //Field needs to hear from server about other players joining.
             field2.addActionListener(aListener);
