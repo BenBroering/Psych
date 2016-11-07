@@ -17,6 +17,9 @@ public class Psych {
     private static InputStreamReader isr;
     private static BufferedReader in;
     private static int gameState = GameState.LOGINREGISTER;
+    private static String playerKey = "";
+    private static String hostToken = "";
+    private static String joinKey = "";
 
     Psych(){
         game = this;
@@ -53,6 +56,30 @@ public class Psych {
         return gameState;
     }
 
+    public static String getPlayerKey() {
+        return playerKey;
+    }
+
+    public static void setPlayerKey(String playerKey) {
+        Psych.playerKey = playerKey;
+    }
+
+    public static String getHostToken() {
+        return hostToken;
+    }
+
+    public static void setHostToken(String hostToken) {
+        Psych.hostToken = hostToken;
+    }
+
+    public static String getJoinKey() {
+        return joinKey;
+    }
+
+    public static void setJoinKey(String joinKey) {
+        Psych.joinKey = joinKey;
+    }
+
     public static void setGameState(int gameState) {
         Psych.gameState = gameState;
     }
@@ -63,8 +90,22 @@ public class Psych {
         new PsychGUI(getGame(), gameState);
     }
 
+    public static void searchForGame(String key) {
+        String response = "";
+        do{
+            out.println(FoilMakerNetworkProtocol.MSG_TYPE.JOINGAME + "--" + playerKey + "--" + key);
+            try {
+                response = in.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }while (!response.contains("JOINGAME") || !response.contains("SUCCESS"));
+
+    }
+
     public static void main(String args[]){
         new Psych();
 
     }
+
 }

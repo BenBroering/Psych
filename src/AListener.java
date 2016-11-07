@@ -13,7 +13,6 @@ public class AListener implements ActionListener {
         // All this garbage is going to handle button presses.
 
         if(e.getActionCommand().equalsIgnoreCase("register") || e.getActionCommand().equalsIgnoreCase("login")){
-            System.out.println("howdy partener");
             int numComp = 0;
             String username = "";
             String password = "";
@@ -33,16 +32,37 @@ public class AListener implements ActionListener {
             if(e.getActionCommand().equals("register")) {
                 Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.CREATENEWUSER + "--" + username + "--" + password);
             }
-            else if(e.getActionCommand().equals("login")){
+
+            if(e.getActionCommand().equals("login")){
                 Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.LOGIN + "--" + username + "--" + password);
-                Psych.createNewGUI(GameState.JOINCREATE);
-
+                try{
+                    String playerKey;
+                    do{
+                        playerKey = Psych.getIn().readLine();
+                    }while ((!playerKey.contains("LOGIN")) || (!playerKey.contains("SUCCESS")));
+                    playerKey = playerKey.split("--")[3];
+                    Psych.setPlayerKey(playerKey);
+                    Psych.createNewGUI(GameState.JOINCREATE);
+                }catch (IOException e1){
+                    e1.printStackTrace();
+                }
             }
-
         }
 
         if(e.getActionCommand().equalsIgnoreCase("create")){
-            Psych.createNewGUI(GameState.CREATE);
+            Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.STARTNEWGAME + "--" + Psych.getPlayerKey());
+            try{
+                String hostToken;
+                do{
+                    hostToken = Psych.getIn().readLine();
+                }while (!hostToken.contains("SUCCESS"));
+                hostToken = hostToken.split("--")[3];
+                Psych.setHostToken(hostToken);
+                Psych.createNewGUI(GameState.CREATE);
+            }catch (IOException e1){
+                e1.printStackTrace();
+            }
+
         }
 
         if(e.getActionCommand().equalsIgnoreCase("join")){
@@ -50,6 +70,19 @@ public class AListener implements ActionListener {
         }
         
         if(e.getActionCommand().equalsIgnoreCase("joinKey")){
+            int numComp = 0;
+            String key = "";
+            for(Component component : PsychGUI.getGUI().getStuffInFrame()){
+                if(component instanceof JTextField){
+                    JTextField textField = (JTextField) component;
+                    if(numComp == 0){
+                        key = textField.getText();
+                    }
+                    numComp++;
+                }
+            }
+            Psych.setJoinKey(key);
+            Psych.searchForGame(key);
 
         }
         

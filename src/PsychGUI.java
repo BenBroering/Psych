@@ -45,6 +45,8 @@ public class PsychGUI extends JFrame{
         this.setSize(400,600);
         AListener aListener = new AListener();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        stuffInFrame = new ArrayList<Component>();
         //
 
         if (gameState == GameState.ENDGAME){
@@ -154,7 +156,7 @@ public class PsychGUI extends JFrame{
             JPanel startPanel1 = new JPanel();
             JLabel label1 = new JLabel("Others should use this key to join your game");
             //Need a method in either server or here to generate a random key.
-            String gameKey = "ypw";
+            String gameKey = Psych.getHostToken();
             JTextField field1 = new JTextField(gameKey,5);
             
             stuffInFrame.add(label1);
