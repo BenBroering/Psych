@@ -16,7 +16,7 @@ public class Psych {
     private static PrintWriter out;
     private static InputStreamReader isr;
     private static BufferedReader in;
-    private static int gameState = GameState.JOINCREATE;
+    private static int gameState = GameState.LOGINREGISTER;
 
     Psych(){
         game = this;

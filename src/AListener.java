@@ -12,48 +12,41 @@ public class AListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // All this garbage is going to handle button presses.
 
-        if(e.getActionCommand().equalsIgnoreCase("register")){
+        if(e.getActionCommand().equalsIgnoreCase("register") || e.getActionCommand().equalsIgnoreCase("login")){
             System.out.println("howdy partener");
             int numComp = 0;
             String username = "";
             String password = "";
             for(Component component : PsychGUI.getGUI().getStuffInFrame()){
-                System.out.println((component instanceof JTextField) + "--" + component.toString());
                 if(component instanceof JTextField){
                     JTextField textField = (JTextField) component;
                     if(numComp == 0){
                         username = textField.getText();
-                        System.out.println(username);
                     }
                     if (numComp == 1){
                         password = textField.getText();
-                        System.out.println(password);
                     }
                     numComp++;
                 }
 
             }
-            PsychGUI.getPsych().getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.CREATENEWUSER + "--" + username + "--" + password);
-            try{
-                Psych.getGame().getIn().readLine();
-            }catch (IOException el){
-                System.out.println("lul");
+            if(e.getActionCommand().equals("register")) {
+                Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.CREATENEWUSER + "--" + username + "--" + password);
+            }
+            else if(e.getActionCommand().equals("login")){
+                Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.LOGIN + "--" + username + "--" + password);
+                Psych.createNewGUI(GameState.JOINCREATE);
+
             }
 
         }
 
-        if(e.getActionCommand().equalsIgnoreCase("login")){
-            System.out.println("Hey");
-            //Psych.createNewGUI(GameState.ENDGAME);
-
-        }
-
         if(e.getActionCommand().equalsIgnoreCase("create")){
-
+            Psych.createNewGUI(GameState.CREATE);
         }
 
         if(e.getActionCommand().equalsIgnoreCase("join")){
-
+            Psych.createNewGUI(GameState.JOIN);
         }
         
         if(e.getActionCommand().equalsIgnoreCase("joinKey")){
