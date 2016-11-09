@@ -155,9 +155,8 @@ public class PsychGUI extends JFrame{
             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
             JPanel startPanel1 = new JPanel();
             JLabel label1 = new JLabel("Others should use this key to join your game");
-            //Need a method in either server or here to generate a random key.
             String gameKey = Psych.getHostToken();
-            JTextField field1 = new JTextField(gameKey,5);
+            JTextField field1 = new JTextField(gameKey);
             
             stuffInFrame.add(label1);
             stuffInFrame.add(field1);
@@ -184,6 +183,38 @@ public class PsychGUI extends JFrame{
             
             mainPanel.add(startPanel1, BorderLayout.CENTER);
          
+        }
+        
+        if(gameState == GameState.SUGGESTION){
+        	JPanel mainPanel = (JPanel) this.getContentPane();
+            mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+            JPanel startPanel1 = new JPanel();
+            //Program for receiving question from server goes here
+            String input = "";
+            JLabel question = new JLabel("What is the word for?");
+            JTextField field1= new JTextField(input,10);
+            stuffInFrame.add(question);
+            stuffInFrame.add(field1);
+            
+            JPanel suggestion = new JPanel();
+            suggestion.setName("Your Suggestion:");
+            JTextField field2 = new JTextField(15);
+            stuffInFrame.add(field2);
+            suggestion.add(field2);
+            JButton submitSuggest = new JButton("Submit Suggestion");
+            submitSuggest.setActionCommand("suggestion");
+            stuffInFrame.add(submitSuggest);
+            
+            startPanel1.add(question);
+            startPanel1.add(field1);
+            startPanel1.add(suggestion);
+            startPanel1.add(submitSuggest, BorderLayout.SOUTH);
+            
+            mainPanel.add(startPanel1, BorderLayout.CENTER);
+            
+            
+            
+            
         }
 
 

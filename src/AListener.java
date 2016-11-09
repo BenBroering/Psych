@@ -89,6 +89,10 @@ public class AListener implements ActionListener {
         if(e.getActionCommand().equalsIgnoreCase("startGame")){
 
         }
+        
+        if(e.getActionCommand().equalsIgnoreCase("suggestion")){
+
+        }
 
     }
 
