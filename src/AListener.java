@@ -27,7 +27,6 @@ public class AListener implements ActionListener {
                     }
                     numComp++;
                 }
-
             }
             if(e.getActionCommand().equals("register")) {
                 Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.CREATENEWUSER + "--" + username + "--" + password);
@@ -82,15 +81,12 @@ public class AListener implements ActionListener {
                 }
             }
             Psych.setJoinKey(key);
+            Psych.createNewGUI(GameState.JOINWAIT);
             Psych.searchForGame(key);
-
         }
         
         if(e.getActionCommand().equalsIgnoreCase("startGame")){
 
         }
-
     }
-
-
 }

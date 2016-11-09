@@ -20,6 +20,9 @@ public class Psych {
     private static String playerKey = "";
     private static String hostToken = "";
     private static String joinKey = "";
+    private static int numPlayers = 0;
+
+    public static final int MAXPLAYERS = 2;
 
     Psych(){
         game = this;
