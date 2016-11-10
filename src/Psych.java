@@ -19,6 +19,7 @@ public class Psych {
     private static PrintWriter out;
     private static InputStreamReader isr;
     private static BufferedReader in;
+
     private static int gameState = GameState.LOGINREGISTER;
     private static String playerKey = "";
     private static String hostToken = "";
@@ -26,18 +27,19 @@ public class Psych {
     private static String username = "";
     private static String password = "";
     private static ArrayList<String> players = new ArrayList<String>();
+    public static final int TOTALPLAYERS = 2;
 
     private static String gameTerm = "";
     private static String gameAnswer = "";
     private static ArrayList<String> answers = new ArrayList<String>();
 
-    Psych(){
+    public Psych(){
         game = this;
         try{
             Socket socket = new Socket(serverIP, serverPort);
-            this.out = new PrintWriter(socket.getOutputStream(), true);
-            this.isr = new InputStreamReader(socket.getInputStream());
-            this.in = new BufferedReader(isr);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            isr = new InputStreamReader(socket.getInputStream());
+            in = new BufferedReader(isr);
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -52,10 +54,6 @@ public class Psych {
 
     public static PrintWriter getOut() {
         return out;
-    }
-
-    public static InputStreamReader getIsr() {
-        return isr;
     }
 
     public static BufferedReader getIn() {
@@ -96,10 +94,6 @@ public class Psych {
 
     public static void setUsername(String username) {
         Psych.username = username;
-    }
-
-    public static String getPassword() {
-        return password;
     }
 
     public static void setPassword(String password) {
@@ -145,13 +139,13 @@ public class Psych {
     }
 
     public static void searchForGame(String key) {
-        String response = "";
-
         Timer timer = new Timer();
+
         timer.schedule(new TimerTask() {
             String response = "";
             @Override
             public void run() {
+
                 out.println(FoilMakerNetworkProtocol.MSG_TYPE.JOINGAME + "--" + playerKey + "--" + key);
                 try {
                     response = in.readLine();
@@ -159,7 +153,14 @@ public class Psych {
                     e.printStackTrace();
                 }
                 if(response.contains("JOINGAME") && response.contains("SUCCESS"))
+                {
+                    Psych.createNewGUI(GameState.JOINWAIT);
+                    Psych.waitForLeader();
                     this.cancel();
+                }
+                System.out.println("NO GAME FOUND!");
+                this.cancel();
+
             }
         }, 0, 1000);
     }
@@ -212,10 +213,10 @@ public class Psych {
                 }
                 if(response.contains("NEWGAMEWORD"))
                 {
-                    Psych.createNewGUI(GameState.SUGGESTION);
-                    gameTerm = response.split("--")[1];
-                    gameAnswer = response.split("--")[2];
+                    Psych.gameTerm = response.split("--")[1];
+                    Psych.gameAnswer = response.split("--")[2];
                     answers.add(gameAnswer);
+                    Psych.createNewGUI(GameState.SUGGESTION);
 
                 }
                 response = "";

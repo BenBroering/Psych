@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.PseudoColumnUsage;
 
 /**
  * Created by Ben on 10/31/2016.
@@ -88,13 +89,12 @@ public class AListener implements ActionListener {
                 }
             }
             Psych.setJoinKey(key);
-            Psych.createNewGUI(GameState.JOINWAIT);
             Psych.searchForGame(key);
-            Psych.waitForLeader();
-
         }
         
         if(e.getActionCommand().equalsIgnoreCase("startGame")){
+            if(Psych.getPlayers().size() > Psych.TOTALPLAYERS)
+                return;
             Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.ALLPARTICIPANTSHAVEJOINED + "--" + Psych.getPlayerKey() + "--" + Psych.getHostToken());
             try {
                 String wordInfo = Psych.getIn().readLine();
@@ -122,8 +122,5 @@ public class AListener implements ActionListener {
             }
             Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.PLAYERSUGGESTION + "--" + Psych.getPlayerKey() + "--" + Psych.getJoinKey() + "--" + suggestion);
         }
-
     }
-
-
 }
