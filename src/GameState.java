@@ -12,5 +12,5 @@ public class GameState {
     public static final int PICKING = 6;
     public static final int RESULTS = 7;
     public static final int ENDGAME = -1;
-    //public static final int NAMENEEDED = 0;
+    //public static final int EXAMPLE = 0;
 }

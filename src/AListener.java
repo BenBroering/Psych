@@ -61,6 +61,7 @@ public class AListener implements ActionListener {
                 hostToken = hostToken.split("--")[3];
                 Psych.getPlayers().add(Psych.getUsername());
                 Psych.setHostToken(hostToken);
+                Psych.setJoinKey(hostToken);
                 Psych.createNewGUI(GameState.CREATE);
                 Psych.waitForPlayers();
 
@@ -108,7 +109,18 @@ public class AListener implements ActionListener {
         }
         
         if(e.getActionCommand().equalsIgnoreCase("suggestion")){
-
+            int numComp = 0;
+            String suggestion = "";
+            for(Component component : PsychGUI.getGUI().getStuffInFrame()){
+                if(component instanceof JTextField){
+                    JTextField textField = (JTextField) component;
+                    if(numComp == 0){
+                        suggestion = textField.getText();
+                    }
+                    numComp++;
+                }
+            }
+            Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.PLAYERSUGGESTION + "--" + Psych.getPlayerKey() + "--" + Psych.getJoinKey() + "--" + suggestion);
         }
 
     }
