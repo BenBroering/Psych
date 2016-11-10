@@ -163,13 +163,17 @@ public class PsychGUI extends JFrame{
             
             JPanel particPanel = new JPanel();
             JLabel label2 = new JLabel("Participants");
-            JTextField field2 = new JTextField(10);
+            //Replaced TextField with TextArea
+            JTextArea textArea = new JTextArea(5,15);
+            for(String player : Psych.getPlayers())
+                textArea.append("• " + player + "\n");
+            //JTextField field2 = new JTextField(10);
             //Field needs to hear from server about other players joining.
-            field2.addActionListener(aListener);
+            //field2.addActionListener(aListener);
             stuffInFrame.add(label2);
-            stuffInFrame.add(field2);
+            stuffInFrame.add(textArea);
             particPanel.add(label2);
-            particPanel.add(field2);
+            particPanel.add(textArea);
             
             JButton startGame = new JButton("Start Game");
             startGame.setActionCommand("startGame");
@@ -211,10 +215,6 @@ public class PsychGUI extends JFrame{
             startPanel1.add(submitSuggest, BorderLayout.SOUTH);
             
             mainPanel.add(startPanel1, BorderLayout.CENTER);
-            
-            
-            
-            
         }
 
 
@@ -225,10 +225,6 @@ public class PsychGUI extends JFrame{
 
     public static PsychGUI getGUI(){
         return gui;
-    }
-
-    public static Psych getPsych(){
-        return psych;
     }
 
     public static ArrayList<Component> getStuffInFrame(){

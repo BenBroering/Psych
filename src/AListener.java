@@ -41,6 +41,8 @@ public class AListener implements ActionListener {
                         playerKey = Psych.getIn().readLine();
                     }while ((!playerKey.contains("LOGIN")) || (!playerKey.contains("SUCCESS")));
                     playerKey = playerKey.split("--")[3];
+                    Psych.setUsername(username);
+                    Psych.setPassword(password);
                     Psych.setPlayerKey(playerKey);
                     Psych.createNewGUI(GameState.JOINCREATE);
                 }catch (IOException e1){
@@ -57,8 +59,11 @@ public class AListener implements ActionListener {
                     hostToken = Psych.getIn().readLine();
                 }while (!hostToken.contains("SUCCESS"));
                 hostToken = hostToken.split("--")[3];
+                Psych.getPlayers().add(Psych.getUsername());
                 Psych.setHostToken(hostToken);
                 Psych.createNewGUI(GameState.CREATE);
+                Psych.waitForPlayers();
+
             }catch (IOException e1){
                 e1.printStackTrace();
             }
@@ -82,12 +87,23 @@ public class AListener implements ActionListener {
                 }
             }
             Psych.setJoinKey(key);
+            Psych.createNewGUI(GameState.JOINWAIT);
             Psych.searchForGame(key);
+            Psych.waitForLeader();
 
         }
         
         if(e.getActionCommand().equalsIgnoreCase("startGame")){
-
+            Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.ALLPARTICIPANTSHAVEJOINED + "--" + Psych.getPlayerKey() + "--" + Psych.getHostToken());
+            Psych.createNewGUI(GameState.SUGGESTION);
+            try {
+                String wordInfo = Psych.getIn().readLine();
+                Psych.setGameTerm(wordInfo.split("--")[1]);
+                Psych.setGameAnswer(wordInfo.split("--")[2]);
+                Psych.getAnswers().add(Psych.getGameAnswer());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
         
         if(e.getActionCommand().equalsIgnoreCase("suggestion")){
