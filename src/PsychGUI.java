@@ -195,10 +195,8 @@ public class PsychGUI extends JFrame{
             JPanel startPanel1 = new JPanel();
             //Program for receiving question from server goes here
             String input = "";
-            JLabel question = new JLabel("What is the word for?");
-            JTextField field1= new JTextField(input,10);
+            JLabel question = new JLabel("What is the word for " + Psych.getGameTerm() + "?");
             stuffInFrame.add(question);
-            stuffInFrame.add(field1);
             
             JPanel suggestion = new JPanel();
             suggestion.setName("Your Suggestion:");
@@ -210,7 +208,6 @@ public class PsychGUI extends JFrame{
             stuffInFrame.add(submitSuggest);
             
             startPanel1.add(question);
-            startPanel1.add(field1);
             startPanel1.add(suggestion);
             startPanel1.add(submitSuggest, BorderLayout.SOUTH);
             

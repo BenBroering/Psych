@@ -95,15 +95,16 @@ public class AListener implements ActionListener {
         
         if(e.getActionCommand().equalsIgnoreCase("startGame")){
             Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.ALLPARTICIPANTSHAVEJOINED + "--" + Psych.getPlayerKey() + "--" + Psych.getHostToken());
-            Psych.createNewGUI(GameState.SUGGESTION);
             try {
                 String wordInfo = Psych.getIn().readLine();
                 Psych.setGameTerm(wordInfo.split("--")[1]);
                 Psych.setGameAnswer(wordInfo.split("--")[2]);
+
                 Psych.getAnswers().add(Psych.getGameAnswer());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+            Psych.createNewGUI(GameState.SUGGESTION);
         }
         
         if(e.getActionCommand().equalsIgnoreCase("suggestion")){
