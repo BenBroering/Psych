@@ -123,7 +123,7 @@ public class PsychGUI extends JFrame{
             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
             JPanel startPanel1 = new JPanel();
             JLabel label1 = new JLabel("Enter the game key to join a game");
-            JTextField gameKey = new JTextField("",5);
+            JTextField gameKey = new JTextField("",8);
             JButton joinKey = new JButton("Join a Game");
             joinKey.setActionCommand("joinKey");
             joinKey.addActionListener(aListener);
@@ -163,13 +163,9 @@ public class PsychGUI extends JFrame{
             
             JPanel particPanel = new JPanel();
             JLabel label2 = new JLabel("Participants");
-            //Replaced TextField with TextArea
             JTextArea textArea = new JTextArea(5,15);
             for(String player : Psych.getPlayers())
                 textArea.append("• " + player + "\n");
-            //JTextField field2 = new JTextField(10);
-            //Field needs to hear from server about other players joining.
-            //field2.addActionListener(aListener);
             stuffInFrame.add(label2);
             stuffInFrame.add(textArea);
             particPanel.add(label2);
@@ -193,8 +189,6 @@ public class PsychGUI extends JFrame{
         	JPanel mainPanel = (JPanel) this.getContentPane();
             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
             JPanel startPanel1 = new JPanel();
-            //Program for receiving question from server goes here
-            String input = "";
             JLabel question = new JLabel("What is the word for " + Psych.getGameTerm() + "?");
             stuffInFrame.add(question);
             
@@ -225,21 +219,18 @@ public class PsychGUI extends JFrame{
 
             mainPanel.add(startPanel1, BorderLayout.CENTER);
         }
-        
+
         if(gameState == GameState.PICKING){
-        	JPanel mainPanel = (JPanel) this.getContentPane();
+            JPanel mainPanel = (JPanel) this.getContentPane();
             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
             JPanel startPanel1 = new JPanel();
-            
+
             JLabel label1 = new JLabel("Pick your option below");
             stuffInFrame.add(label1);
             startPanel1.add(label1, BorderLayout.NORTH);
-            
-            String[] options = new String[0]; //Action for getting suggestions in a array goes here.
-                                              //Unsure of exact amount of players.
 
             Psych.setChoiceButtons(new ButtonGroup());
-
+            JPanel startPanel2 = new JPanel();
             for(String answer : Psych.getAnswers()){
                 JRadioButton choice = new JRadioButton(answer);
                 Psych.getChoiceButtons().add(choice);
@@ -249,49 +240,51 @@ public class PsychGUI extends JFrame{
                     choice.setEnabled(false);
                 stuffInFrame.add(choice);
                 Psych.getChoiceButtons().add(choice);
-                startPanel1.add(choice, BorderLayout.CENTER);
+                startPanel2.add(choice, BorderLayout.CENTER);
             }
+            JPanel startPanel3 = new JPanel();
 
             JButton submitOption = new JButton("Submit Option");
             submitOption.setActionCommand("submit");
             submitOption.addActionListener(aListener);
             stuffInFrame.add(submitOption);
             startPanel1.add(label1, BorderLayout.SOUTH);
-            startPanel1.add(submitOption);
-            
+            startPanel3.add(submitOption);
+
             mainPanel.add(startPanel1);
+            mainPanel.add(startPanel2, BorderLayout.CENTER);
+            mainPanel.add(startPanel3, BorderLayout.SOUTH);
+
         }
         
         if(gameState == GameState.RESULTS){
         	JPanel mainPanel = (JPanel) this.getContentPane();
             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
-            
-            JPanel roundResults = new JPanel();
-            roundResults.setName("Round Result");
-            String playerResults = ""; //Get this round results of player
-            JTextArea textAreaDescription = new JTextArea(3,15);
-            JTextArea textAreaScoreboard = new JTextArea(5,15);
-            /*for(String player : Psych.getPlayers())
-                textArea.append("• " + player + "\n")*/
-            ArrayList<String> roundInfo = Psych.getRoundInfo();
-            for(int findPlayer = 0; findPlayer < roundInfo.size(); findPlayer += 5) {
-                if(roundInfo.get(findPlayer).equalsIgnoreCase(Psych.getUsername())){
-                    textAreaScoreboard.append(roundInfo.get(findPlayer) + " ==> Score:" + roundInfo.get(findPlayer+2)
-                            + "| Fooled: " + roundInfo.get(findPlayer+3)
-                            + " player(s) | Fooled By: " + roundInfo.get(findPlayer+4) + " player(s)");
-                }
-            }
-            JTextArea area1 = new JTextArea(playerResults,5,20);
-            stuffInFrame.add(area1);
-            
+
             JPanel overallResults = new JPanel();
             overallResults.setName("Overall Results");
-            String[] scores = new String[0]; //Get the current scores of all players
-            JTextArea area2 = new JTextArea(5,20);
-            for(String score : scores){
-            	area2.append(score);
+            JPanel roundResults = new JPanel();
+            roundResults.setName("Round Result");
+            JTextArea textAreaDescription = new JTextArea(3,25);
+            JTextArea textAreaScoreboard = new JTextArea(5,30);
+
+            JLabel infoMessage = new JLabel("Message: ");
+            roundResults.add(infoMessage);
+            JLabel scores = new JLabel("Scores: ");
+            overallResults.add(scores);
+
+            ArrayList<String> roundInfo = Psych.getRoundInfo();
+            for(int findPlayer = 0; findPlayer < roundInfo.size(); findPlayer += 5) {
+                textAreaScoreboard.append(roundInfo.get(findPlayer) + " => Score:" + roundInfo.get(findPlayer+2)
+                        + " | Fooled: " + roundInfo.get(findPlayer+3)
+                        + " player(s) | Fooled By: " + roundInfo.get(findPlayer+4) + " player(s)\n");
+                if(roundInfo.get(findPlayer).equalsIgnoreCase(Psych.getUsername())){
+                    textAreaDescription.append(roundInfo.get(findPlayer+1) + "\n");
+                }
             }
-            stuffInFrame.add(area2);
+
+            roundResults.add(textAreaDescription);
+            overallResults.add(textAreaScoreboard);
             
             JButton nextRound = new JButton("Next Round");
             nextRound.setActionCommand("nextRound");

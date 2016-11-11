@@ -183,7 +183,6 @@ public class Psych {
                     Psych.waitForLeader();
                     this.cancel();
                 }
-                System.out.println("NO GAME FOUND!");
                 this.cancel();
 
             }
@@ -217,14 +216,10 @@ public class Psych {
 
                 if(response.contains("ROUNDRESULT"))
                 {
-                    ArrayList<String> info = new ArrayList<String>();
-                    for(String item : response.split("--"))
-                        info.add(item);
-                    info.remove(0);
-
-                    //String joinedPlayer = info[1];
-                    //Psych.getPlayers().add(joinedPlayer);
-
+                    roundInfo.clear();
+                    for(int item = 0; item < response.split("--").length; item++)
+                        roundInfo.add(response.split("--")[item]);
+                    roundInfo.remove(0);
                     String gameover = "";
                     try {
                         if(Psych.in.ready())

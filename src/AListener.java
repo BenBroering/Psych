@@ -91,7 +91,7 @@ public class AListener implements ActionListener {
         }
         
         if(e.getActionCommand().equalsIgnoreCase("startGame")){
-            if(Psych.getPlayers().size() > Psych.TOTALPLAYERS)
+            if(Psych.getPlayers().size() != Psych.TOTALPLAYERS)
                 return;
             Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.ALLPARTICIPANTSHAVEJOINED + "--" + Psych.getPlayerKey() + "--" + Psych.getHostToken());
             try {
@@ -112,6 +112,8 @@ public class AListener implements ActionListener {
                     JTextField textField = (JTextField) component;
                     if(numComp == 0){
                         suggestion = textField.getText();
+                        if(suggestion.equalsIgnoreCase("") || suggestion.equalsIgnoreCase(Psych.getGameAnswer()))
+                            return;
                         Psych.setMyAnswer(suggestion);
                     }
                     numComp++;
