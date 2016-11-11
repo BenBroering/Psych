@@ -248,6 +248,11 @@ public class PsychGUI extends JFrame{
             nextRound.addActionListener(aListener);
             stuffInFrame.add(nextRound);
             
+            mainPanel.add(roundResults, BorderLayout.NORTH);
+            mainPanel.add(overallResults, BorderLayout.CENTER);
+            mainPanel.add(nextRound, BorderLayout.SOUTH);
+            
+            
             
         }
 
