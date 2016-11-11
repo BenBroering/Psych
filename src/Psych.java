@@ -187,7 +187,7 @@ public class Psych {
                 this.cancel();
 
             }
-        }, 0, 500);
+        }, 0, 50);
     }
 
     public static void waitForPlayers() {
@@ -245,7 +245,7 @@ public class Psych {
                 }
                 response = "";
             }
-        }, 0, 500);
+        }, 0, 50);
 
 
     }
@@ -275,7 +275,7 @@ public class Psych {
                 if(Psych.getGameState() != GameState.JOINWAIT)
                     this.cancel();
             }
-        }, 0, 500);
+        }, 0, 50);
     }
 
     public static void waitForSuggestions(){
@@ -306,7 +306,7 @@ public class Psych {
                 if(Psych.getGameState() != GameState.WAITING)
                     this.cancel();
             }
-        }, 0, 500);
+        }, 0, 50);
     }
 
     public static void main(String args[]){ new Psych(); }
