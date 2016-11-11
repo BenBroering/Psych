@@ -213,6 +213,22 @@ public class PsychGUI extends JFrame{
             
             mainPanel.add(startPanel1, BorderLayout.CENTER);
         }
+        
+        if(gameState == GameState.PICKING){
+        	JPanel mainPanel = (JPanel) this.getContentPane();
+            mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+            JPanel startPanel1 = new JPanel();
+            
+            JLabel label1 = new JLabel("Pick your option below");
+            String[] options; //Action for getting suggestions goes here.
+            
+        }
+        
+        if(gameState == GameState.RESULTS){
+        	JPanel mainPanel = (JPanel) this.getContentPane();
+            mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+            JPanel startPanel1 = new JPanel();
+        }
 
 
         // Always run this stuff too.
