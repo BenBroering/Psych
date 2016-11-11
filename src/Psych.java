@@ -170,7 +170,8 @@ public class Psych {
             @Override
             public void run() {
 
-                out.println(FoilMakerNetworkProtocol.MSG_TYPE.JOINGAME + "--" + playerKey + "--" + key1);
+                out.println(FoilMakerNetworkProtocol.MSG_TYPE.JOINGAME + "--" + Psych.playerKey + "--" + key1);
+
                 try {
                     response = in.readLine();
                 } catch (IOException e) {
