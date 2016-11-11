@@ -122,5 +122,11 @@ public class AListener implements ActionListener {
             }
             Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.PLAYERSUGGESTION + "--" + Psych.getPlayerKey() + "--" + Psych.getJoinKey() + "--" + suggestion);
         }
+        
+        
+        if(e.getActionCommand().equalsIgnoreCase("nextRound")){
+        	
+        }
+        
     }
 }

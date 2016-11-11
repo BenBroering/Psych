@@ -227,7 +227,28 @@ public class PsychGUI extends JFrame{
         if(gameState == GameState.RESULTS){
         	JPanel mainPanel = (JPanel) this.getContentPane();
             mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
-            JPanel startPanel1 = new JPanel();
+            
+            JPanel roundResults = new JPanel();
+            roundResults.setName("Round Result");
+            String playerResults = ""; //Get this round results of player
+            JTextArea area1 = new JTextArea(playerResults,5,20);
+            stuffInFrame.add(area1);
+            
+            JPanel overallResults = new JPanel();
+            overallResults.setName("Overall Results");
+            String[] scores = new String[0]; //Get the current scores of all players
+            JTextArea area2 = new JTextArea(5,20);
+            for(String score : scores){
+            	area2.append(score);
+            }
+            stuffInFrame.add(area2);
+            
+            JButton nextRound = new JButton("Next Round");
+            nextRound.setActionCommand("nextRound");
+            nextRound.addActionListener(aListener);
+            stuffInFrame.add(nextRound);
+            
+            
         }
 
 
