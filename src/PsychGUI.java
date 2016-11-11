@@ -205,6 +205,7 @@ public class PsychGUI extends JFrame{
             suggestion.add(field2);
             JButton submitSuggest = new JButton("Submit Suggestion");
             submitSuggest.setActionCommand("suggestion");
+            submitSuggest.addActionListener(aListener);
             stuffInFrame.add(submitSuggest);
             
             startPanel1.add(question);
@@ -220,7 +221,29 @@ public class PsychGUI extends JFrame{
             JPanel startPanel1 = new JPanel();
             
             JLabel label1 = new JLabel("Pick your option below");
-            String[] options; //Action for getting suggestions goes here.
+            stuffInFrame.add(label1);
+            startPanel1.add(label1, BorderLayout.NORTH);
+            
+            String[] options = new String[0]; //Action for getting suggestions in a array goes here.
+                                              //Unsure of exact amount of players.
+            ArrayList<JRadioButton> choices = new ArrayList<JRadioButton>();
+            for(int i=0; i<options.length; i++){
+            	JRadioButton choice = new JRadioButton(options[i]);
+            	choice.setActionCommand("option" + i);
+            	choice.addActionListener(aListener);
+            	stuffInFrame.add(choice);
+            	choices.add(choice);
+            	startPanel1.add(choice, BorderLayout.CENTER);
+            }
+            
+            JButton submitOption = new JButton("Submit Option");
+            submitOption.setActionCommand("submitOption");
+            stuffInFrame.add(submitOption);
+            startPanel1.add(label1, BorderLayout.SOUTH);
+            
+            mainPanel.add(startPanel1);
+            
+           
             
         }
         

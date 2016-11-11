@@ -123,6 +123,22 @@ public class AListener implements ActionListener {
             Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.PLAYERSUGGESTION + "--" + Psych.getPlayerKey() + "--" + Psych.getJoinKey() + "--" + suggestion);
         }
         
+        String test = "";
+        test.startsWith("");
+        
+        /**
+         * Since it is not define how many players they will be specifically, each
+         *   radio button for the player choice starts with option while ending with
+         *   a corresponding number. THe listener may have to check which button sent
+         *   the action command
+         */
+        if(e.getActionCommand().startsWith("option")){
+        	
+        }
+        
+        if(e.getActionCommand().equalsIgnoreCase("submitOption")){
+        	
+        }
         
         if(e.getActionCommand().equalsIgnoreCase("nextRound")){
         	
