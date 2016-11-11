@@ -269,6 +269,18 @@ public class PsychGUI extends JFrame{
             JPanel roundResults = new JPanel();
             roundResults.setName("Round Result");
             String playerResults = ""; //Get this round results of player
+            JTextArea textAreaDescription = new JTextArea(3,15);
+            JTextArea textAreaScoreboard = new JTextArea(5,15);
+            /*for(String player : Psych.getPlayers())
+                textArea.append("• " + player + "\n")*/
+            ArrayList<String> roundInfo = Psych.getRoundInfo();
+            for(int findPlayer = 0; findPlayer < roundInfo.size(); findPlayer += 5) {
+                if(roundInfo.get(findPlayer).equalsIgnoreCase(Psych.getUsername())){
+                    textAreaScoreboard.append(roundInfo.get(findPlayer) + " ==> Score:" + roundInfo.get(findPlayer+2)
+                            + "| Fooled: " + roundInfo.get(findPlayer+3)
+                            + " player(s) | Fooled By: " + roundInfo.get(findPlayer+4) + " player(s)");
+                }
+            }
             JTextArea area1 = new JTextArea(playerResults,5,20);
             stuffInFrame.add(area1);
             
@@ -285,6 +297,8 @@ public class PsychGUI extends JFrame{
             nextRound.setActionCommand("nextRound");
             nextRound.addActionListener(aListener);
             stuffInFrame.add(nextRound);
+            if(Psych.isGameOver())
+                nextRound.setEnabled(false);
             
             mainPanel.add(roundResults, BorderLayout.NORTH);
             mainPanel.add(overallResults, BorderLayout.CENTER);

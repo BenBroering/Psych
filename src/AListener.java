@@ -1,11 +1,8 @@
-import javafx.scene.control.RadioButton;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.sql.PseudoColumnUsage;
 
 /**
  * Created by Ben on 10/31/2016.
@@ -45,7 +42,6 @@ public class AListener implements ActionListener {
                     }while ((!playerKey.contains("LOGIN")) || (!playerKey.contains("SUCCESS")));
                     playerKey = playerKey.split("--")[3];
                     Psych.setUsername(username);
-                    Psych.setPassword(password);
                     Psych.setPlayerKey(playerKey);
                     Psych.createNewGUI(GameState.JOINCREATE);
                 }catch (IOException e1){
@@ -126,17 +122,13 @@ public class AListener implements ActionListener {
             Psych.waitForSuggestions();
         }
 
-        
         /**
          * Since it is not define how many players they will be specifically, each
          *   radio button for the player choice starts with option while ending with
          *   a corresponding number. The listener may have to check which button sent
          *   the action command
          */
-
-        
         if(e.getActionCommand().equalsIgnoreCase("submit")){
-            //System.out.println("YOYOYO");
             String choice = Psych.getChoiceButtons().getSelection().getActionCommand();
             Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.PLAYERCHOICE + "--" + Psych.getPlayerKey() + "--" + Psych.getJoinKey() + "--" + choice);
             Psych.createNewGUI(GameState.WAITING);
@@ -144,15 +136,7 @@ public class AListener implements ActionListener {
         }
         
         if(e.getActionCommand().equalsIgnoreCase("nextRound")){
-            try {
-                String wordInfo = Psych.getIn().readLine();
-                Psych.setGameTerm(wordInfo.split("--")[1]);
-                Psych.setGameAnswer(wordInfo.split("--")[2]);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
             Psych.createNewGUI(GameState.SUGGESTION);
         }
-        
     }
 }

@@ -26,15 +26,16 @@ public class Psych {
     private static String hostToken = "";
     private static String joinKey = "";
     private static String username = "";
-    private static String password = "";
     private static ArrayList<String> players = new ArrayList<String>();
     public static final int TOTALPLAYERS = 2;
 
     private static String gameTerm = "";
     private static String gameAnswer = "";
     private static ArrayList<String> answers = new ArrayList<String>();
+    private static ArrayList<String> roundInfo = new ArrayList<String>();
     private static ButtonGroup choiceButtons;
     private static String myAnswer = "";
+    private static boolean isGameOver = false;
 
     public Psych(){
         game = this;
@@ -99,10 +100,6 @@ public class Psych {
         Psych.username = username;
     }
 
-    public static void setPassword(String password) {
-        Psych.password = password;
-    }
-
     public static void setGameState(int gameState) {
         Psych.gameState = gameState;
     }
@@ -123,6 +120,14 @@ public class Psych {
         return answers;
     }
 
+    public static boolean isGameOver() {
+        return isGameOver;
+    }
+
+    public static void setGameOver(boolean isGameOver) {
+        Psych.isGameOver = isGameOver;
+    }
+
     public static void setGameTerm(String gameTerm) {
         Psych.gameTerm = gameTerm;
     }
@@ -139,16 +144,16 @@ public class Psych {
         Psych.myAnswer = myAnswer;
     }
 
-    public void resetAnswers(){
-        answers = new ArrayList<String>();
-    }
-
     public static ButtonGroup getChoiceButtons() {
         return choiceButtons;
     }
 
     public static void setChoiceButtons(ButtonGroup choiceButtons) {
         Psych.choiceButtons = choiceButtons;
+    }
+
+    public static ArrayList<String> getRoundInfo() {
+        return roundInfo;
     }
 
     public static void createNewGUI(int gameState){
@@ -218,7 +223,23 @@ public class Psych {
 
                     //String joinedPlayer = info[1];
                     //Psych.getPlayers().add(joinedPlayer);
-                    Psych.createNewGUI(GameState.RESULTS);
+
+                    String gameover = "";
+                    try {
+                        if(Psych.in.ready())
+                             gameover = Psych.in.readLine();
+                        if(gameover.contains("GAMEOVER"))
+                            Psych.setGameOver(true);
+                        else if(gameover.contains("NEWGAMEWORD")){
+                            Psych.getAnswers().clear();
+                            Psych.setGameTerm(gameover.split("--")[1]);
+                            Psych.setGameAnswer(gameover.split("--")[2]);
+                        }
+                        Psych.createNewGUI(GameState.RESULTS);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     this.cancel();
                 }
                 response = "";
