@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,6 +33,8 @@ public class Psych {
     private static String gameTerm = "";
     private static String gameAnswer = "";
     private static ArrayList<String> answers = new ArrayList<String>();
+    private static ButtonGroup choiceButtons;
+    private static String myAnswer = "";
 
     public Psych(){
         game = this;
@@ -128,8 +131,24 @@ public class Psych {
         Psych.gameAnswer = gameAnswer;
     }
 
+    public static String getMyAnswer() {
+        return myAnswer;
+    }
+
+    public static void setMyAnswer(String myAnswer) {
+        Psych.myAnswer = myAnswer;
+    }
+
     public void resetAnswers(){
         answers = new ArrayList<String>();
+    }
+
+    public static ButtonGroup getChoiceButtons() {
+        return choiceButtons;
+    }
+
+    public static void setChoiceButtons(ButtonGroup choiceButtons) {
+        Psych.choiceButtons = choiceButtons;
     }
 
     public static void createNewGUI(int gameState){
@@ -162,7 +181,7 @@ public class Psych {
                 this.cancel();
 
             }
-        }, 0, 1000);
+        }, 0, 500);
     }
 
     public static void waitForPlayers() {
@@ -172,8 +191,8 @@ public class Psych {
             @Override
             public void run() {
                 try {
-                    if(in.ready())
-                        response = in.readLine();
+                    if(Psych.in.ready())
+                        response = Psych.in.readLine();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -186,13 +205,25 @@ public class Psych {
                     {
                         Psych.getPlayers().add(joinedPlayer);
                         Psych.createNewGUI(GameState.CREATE);
+                        this.cancel();
                     }
                 }
-                response = "";
-                if(Psych.getGameState() != GameState.CREATE)
+
+                if(response.contains("ROUNDRESULT"))
+                {
+                    ArrayList<String> info = new ArrayList<String>();
+                    for(String item : response.split("--"))
+                        info.add(item);
+                    info.remove(0);
+
+                    //String joinedPlayer = info[1];
+                    //Psych.getPlayers().add(joinedPlayer);
+                    Psych.createNewGUI(GameState.RESULTS);
                     this.cancel();
+                }
+                response = "";
             }
-        }, 0, 1000);
+        }, 0, 500);
 
 
     }
@@ -215,7 +246,6 @@ public class Psych {
                 {
                     Psych.gameTerm = response.split("--")[1];
                     Psych.gameAnswer = response.split("--")[2];
-                    answers.add(gameAnswer);
                     Psych.createNewGUI(GameState.SUGGESTION);
 
                 }
@@ -223,7 +253,38 @@ public class Psych {
                 if(Psych.getGameState() != GameState.JOINWAIT)
                     this.cancel();
             }
-        }, 0, 1000);
+        }, 0, 500);
+    }
+
+    public static void waitForSuggestions(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            String response = "";
+            @Override
+            public void run() {
+
+                try {
+                    if(in.ready())
+                        response = in.readLine();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if(response.contains("ROUNDOPTIONS"))
+                {
+                    for(String option : response.split("--")){
+                        if(!option.equalsIgnoreCase(response.split("--")[0]))
+                            Psych.getAnswers().add(option);
+                    }
+
+                    Psych.createNewGUI(GameState.PICKING);
+
+                }
+                response = "";
+                if(Psych.getGameState() != GameState.WAITING)
+                    this.cancel();
+            }
+        }, 0, 500);
     }
 
     public static void main(String args[]){ new Psych(); }

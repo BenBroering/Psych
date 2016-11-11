@@ -214,6 +214,17 @@ public class PsychGUI extends JFrame{
             
             mainPanel.add(startPanel1, BorderLayout.CENTER);
         }
+
+        if(gameState == GameState.WAITING){
+            JPanel mainPanel = (JPanel) this.getContentPane();
+            mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+            JPanel startPanel1 = new JPanel();
+            JLabel label1  = new JLabel("Waiting for other players...");
+
+            startPanel1.add(label1);
+
+            mainPanel.add(startPanel1, BorderLayout.CENTER);
+        }
         
         if(gameState == GameState.PICKING){
         	JPanel mainPanel = (JPanel) this.getContentPane();
@@ -226,25 +237,29 @@ public class PsychGUI extends JFrame{
             
             String[] options = new String[0]; //Action for getting suggestions in a array goes here.
                                               //Unsure of exact amount of players.
-            ArrayList<JRadioButton> choices = new ArrayList<JRadioButton>();
-            for(int i=0; i<options.length; i++){
-            	JRadioButton choice = new JRadioButton(options[i]);
-            	choice.setActionCommand("option" + i);
-            	choice.addActionListener(aListener);
-            	stuffInFrame.add(choice);
-            	choices.add(choice);
-            	startPanel1.add(choice, BorderLayout.CENTER);
+
+            Psych.setChoiceButtons(new ButtonGroup());
+
+            for(String answer : Psych.getAnswers()){
+                JRadioButton choice = new JRadioButton(answer);
+                Psych.getChoiceButtons().add(choice);
+                choice.setActionCommand(answer);
+                choice.addActionListener(aListener);
+                if(Psych.getMyAnswer().equalsIgnoreCase(answer))
+                    choice.setEnabled(false);
+                stuffInFrame.add(choice);
+                Psych.getChoiceButtons().add(choice);
+                startPanel1.add(choice, BorderLayout.CENTER);
             }
-            
+
             JButton submitOption = new JButton("Submit Option");
-            submitOption.setActionCommand("submitOption");
+            submitOption.setActionCommand("submit");
+            submitOption.addActionListener(aListener);
             stuffInFrame.add(submitOption);
             startPanel1.add(label1, BorderLayout.SOUTH);
+            startPanel1.add(submitOption);
             
             mainPanel.add(startPanel1);
-            
-           
-            
         }
         
         if(gameState == GameState.RESULTS){

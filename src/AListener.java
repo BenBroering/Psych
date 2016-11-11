@@ -1,3 +1,5 @@
+import javafx.scene.control.RadioButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -100,8 +102,6 @@ public class AListener implements ActionListener {
                 String wordInfo = Psych.getIn().readLine();
                 Psych.setGameTerm(wordInfo.split("--")[1]);
                 Psych.setGameAnswer(wordInfo.split("--")[2]);
-
-                Psych.getAnswers().add(Psych.getGameAnswer());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -116,32 +116,42 @@ public class AListener implements ActionListener {
                     JTextField textField = (JTextField) component;
                     if(numComp == 0){
                         suggestion = textField.getText();
+                        Psych.setMyAnswer(suggestion);
                     }
                     numComp++;
                 }
             }
             Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.PLAYERSUGGESTION + "--" + Psych.getPlayerKey() + "--" + Psych.getJoinKey() + "--" + suggestion);
+            Psych.createNewGUI(GameState.WAITING);
+            Psych.waitForSuggestions();
         }
-        
-        String test = "";
-        test.startsWith("");
+
         
         /**
          * Since it is not define how many players they will be specifically, each
          *   radio button for the player choice starts with option while ending with
-         *   a corresponding number. THe listener may have to check which button sent
+         *   a corresponding number. The listener may have to check which button sent
          *   the action command
          */
-        if(e.getActionCommand().startsWith("option")){
-        	
-        }
+
         
-        if(e.getActionCommand().equalsIgnoreCase("submitOption")){
-        	
+        if(e.getActionCommand().equalsIgnoreCase("submit")){
+            //System.out.println("YOYOYO");
+            String choice = Psych.getChoiceButtons().getSelection().getActionCommand();
+            Psych.getOut().println(FoilMakerNetworkProtocol.MSG_TYPE.PLAYERCHOICE + "--" + Psych.getPlayerKey() + "--" + Psych.getJoinKey() + "--" + choice);
+            Psych.createNewGUI(GameState.WAITING);
+            Psych.waitForPlayers();
         }
         
         if(e.getActionCommand().equalsIgnoreCase("nextRound")){
-        	
+            try {
+                String wordInfo = Psych.getIn().readLine();
+                Psych.setGameTerm(wordInfo.split("--")[1]);
+                Psych.setGameAnswer(wordInfo.split("--")[2]);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            Psych.createNewGUI(GameState.SUGGESTION);
         }
         
     }
