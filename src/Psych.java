@@ -164,13 +164,13 @@ public class Psych {
 
     public static void searchForGame(String key) {
         Timer timer = new Timer();
-
+        final String key1 = key;
         timer.schedule(new TimerTask() {
             String response = "";
             @Override
             public void run() {
 
-                out.println(FoilMakerNetworkProtocol.MSG_TYPE.JOINGAME + "--" + playerKey + "--" + key);
+                out.println(FoilMakerNetworkProtocol.MSG_TYPE.JOINGAME + "--" + Psych.playerKey + "--" + key1);
                 try {
                     response = in.readLine();
                 } catch (IOException e) {
